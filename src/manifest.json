@@ -1,7 +1,7 @@
 {
   "manifest_version": 2,
   "name": "Goto foo",
-  "version": "1.0",
+  "version": "1.1",
   "description": "Adds a 'Goto' option when right-clicking text that resembles a URL",
   "permissions": ["contextMenus", "<all_urls>"],
   "background": {

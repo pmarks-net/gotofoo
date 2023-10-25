@@ -1,5 +1,5 @@
 function validURL(str) {
-  if (/\s/.test(url)) {
+  if (/\s/.test(str)) {
     return null;  // don't allow whitespace in the middle.
   }
   try {
