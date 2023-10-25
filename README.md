@@ -3,7 +3,7 @@
 
 Adds a 'Goto &lt;url&gt;' option to Firefox, when right-clicking text that resembles a URL.
 
-Note that this extension doesn't work on Chrome, because Chrome doesn't support `contextMenus.{onShown,onHidden}`, and already has a built-in "Go to &lt;url&gt;" feature.
+Note that this extension doesn't work on Chrome, because Chrome doesn't support `contextMenus.{onShown,onHidden}`, and Chrome already has a built-in "Go to &lt;url&gt;" feature.
 
 ## Add to Firefox
 https://addons.mozilla.org/firefox/addon/gotofoo/  
