@@ -1,2 +1,2 @@
-# gotofoo
-Adds a "Go to &lt;url>" context menu option to Firefox
+# Goto foo
+Adds a "Goto &lt;url>" context menu option to Firefox
