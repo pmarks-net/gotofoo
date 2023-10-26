@@ -4,7 +4,7 @@ function validURL(str) {
   }
   try {
     const u = new URL(str);
-    return /^https?:$/.test(u.protocol);
+    return /^(https?):$/.test(u.protocol);
   } catch (e) {
     return null;
   }
@@ -32,6 +32,29 @@ function fixURL(url) {
   return null;
 }
 
+async function addChildTab(parentTab, url) {
+  try {
+    return await browser.tabs.create({
+      'url': url,
+      'windowId': parentTab.windowId,
+      'index': parentTab.index + 1,  // n.b. index not id
+      'openerTabId': parentTab.id    // n.b. id not index
+    });
+  } catch (e) {
+    return null;  // Indicate that an error occurred
+  }
+}
+
+// Flash a simple "URL ?" error message for 1 second.
+async function flashError(tab) {
+  const newTab = await addChildTab(tab, browser.runtime.getURL("error.html"));
+  if (newTab) {
+    setTimeout(() => {
+      browser.tabs.remove(newTab.id);
+    }, 1000);
+  }
+}
+
 browser.contextMenus.create({
   id: "gotofoo",
   title: "Goto foo",
@@ -53,11 +76,13 @@ browser.contextMenus.onHidden.addListener(() => {
   browser.contextMenus.refresh();
 });
 
-browser.contextMenus.onClicked.addListener((info, tab) => {
+browser.contextMenus.onClicked.addListener(async (info, tab) => {
   if (info.menuItemId === "gotofoo") {
     const url = fixURL(info.selectionText);
-    if (url) {
-      browser.tabs.create({ url });
+    if (!(url && await addChildTab(tab, url))) {
+      // This error is known to occur when opening data: or javascript: URLs,
+      // though the validURL() regex filters them out first.
+      await flashError(tab);
     }
   }
 });
