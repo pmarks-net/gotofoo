@@ -1,11 +1,11 @@
 # Goto foo
 ![](/src/icon128.png?raw=true)
 
-Adds a 'Goto &lt;url&gt;' option to Firefox, when right-clicking text that resembles a URL.
+Adds a "Goto &lt;url&gt;" option to Firefox, when right-clicking text that resembles a URL.
 
-Firefox already provides an "Open Link" option when highlighting well-formed URLs, but 'Goto foo' is more comprehensive, recognizing IP address literals and incomplete URLs without an http:// prefix.
+Firefox already provides an "Open Link" option when highlighting well-formed URLs, but **Goto foo** is more comprehensive, recognizing IP address literals and incomplete URLs without an http:// prefix.
 
-This extension doesn't work on Chrome, because Chrome doesn't support `contextMenus.onShown`, and Chrome's built-in "Go to &lt;url&gt;" is fine.
+Chrome doesn't need **Goto foo**, because its "Go to &lt;url&gt;" feature already works fine.
 
 ## Add to Firefox
 https://addons.mozilla.org/firefox/addon/gotofoo/  
