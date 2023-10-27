@@ -17,6 +17,8 @@ https://addons.mozilla.org/firefox/addon/gotofoo/
 
 ## Example URLs
 
+After installing Goto foo, you can test its behavior by selecting these URLs, or various substrings:
+
 ```
 http://example.com
 https://1.1.1.1/media/lighthouse.svg
