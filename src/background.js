@@ -10,6 +10,17 @@ function validURL(str) {
   }
 }
 
+function splicePrefix(url, proto, max_missing) {
+  const urlLower = url.toLowerCase();
+  for (let i = 0; i <= max_missing; i++) {
+    const s = proto.substring(i);
+    if (urlLower.startsWith(s)) {
+      return proto + url.substring(s.length);
+    }
+  }
+  return null;
+}
+
 function fixURL(url) {
   if (!url) {
     return null;
@@ -18,16 +29,17 @@ function fixURL(url) {
   if (validURL(url)) {
     return url;
   }
+  if (!/[:./]/.test(url)) {
+    return null;  // Not URLy enough.
+  }
   // Put IPv6 addresses in brackets.
   if (/^([0-9A-Fa-f]*:){2}[0-9A-Fa-f:.]*$/.test(url)) {
     url = `[${url}]`;
   }
-  // Maybe the URL is valid with an https:// prefix?
-  if (/^[^:/]/.test(url) && /[:./]/.test(url)) {
-    const prefixedURL = `https://${url}`;
-    if (validURL(prefixedURL)) {
-      return prefixedURL;
-    }
+  // Try adding a protocol prefix.
+  const prefixedURL = splicePrefix(url, "http://", 3) || splicePrefix(url, "https://", 8);
+  if (validURL(prefixedURL)) {
+    return prefixedURL;
   }
   return null;
 }
