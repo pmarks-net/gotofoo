@@ -14,3 +14,15 @@ https://addons.mozilla.org/firefox/addon/gotofoo/
 
 ## Screenshot
 ![Screenshot](/misc/screenshot_640x400.png?raw=true)
+
+## Example URLs
+
+```
+http://example.com
+https://1.1.1.1/media/lighthouse.svg
+https://[2606:4700:4700::1111]/media/lighthouse.svg
+
+Note that data: and javascript: URLs are not supported:
+data:text/html,hello
+javascript:alert('hello');
+```
