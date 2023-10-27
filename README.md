@@ -25,8 +25,11 @@ After installing Goto foo, you can test its behavior by selecting these URLs, or
 http://example.com
 https://1.1.1.1/media/lighthouse.svg
 https://[2606:4700:4700::1111]/media/lighthouse.svg
+```
 
 Note that data: and javascript: URLs are not supported:
+
+```
 data:text/html,hello
 javascript:alert('hello');
 ```
