@@ -22,7 +22,7 @@ https://addons.mozilla.org/firefox/addon/gotofoo/
 After installing Goto foo, you can test its behavior by selecting these URLs, or various substrings:
 
 ```
-http://example.com
+http://www.example.com
 https://1.1.1.1/media/lighthouse.svg
 https://[2606:4700:4700::1111]/media/lighthouse.svg
 ```
