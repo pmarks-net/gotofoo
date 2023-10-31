@@ -1,8 +1,8 @@
 {
   "manifest_version": 2,
   "name": "Goto foo",
-  "version": "1.5",
-  "description": "Adds a 'Goto <url>' option when right-clicking text that resembles a URL.",
+  "version": "1.6",
+  "description": "Right click menu: Goto <selected text as URL>",
   "homepage_url": "https://github.com/pmarks-net/gotofoo",
   "background": {
     "scripts": ["background.js"],
