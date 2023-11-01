@@ -44,22 +44,50 @@ function fixURL(url) {
   return null;
 }
 
-async function addChildTab(parentTab, url) {
+async function openTab(parentTab, mods, url) {
   try {
-    return await browser.tabs.create({
-      'url': url,
-      'windowId': parentTab.windowId,
-      'index': parentTab.index + 1,  // n.b. index not id
-      'openerTabId': parentTab.id    // n.b. id not index
-    });
+    if (mods == "Ctrl" || mods == "Command" || mods == "Shift") {
+      // Open a new background tab.
+      const newTab = await browser.tabs.create({
+        'url': url,
+        'windowId': parentTab.windowId,
+        'index': await nextBackgroundIndex(parentTab),
+        'openerTabId': parentTab.id,
+        'active': false
+      });
+      if (mods == "Shift") {
+        // Move the tab to a new window. We do this in two steps because
+        // windows.create() doesn't catch invalid URLs.
+        await browser.windows.create({'tabId': newTab.id});
+      }
+      return newTab;
+    } else {
+      // Default behavior: open a new foreground tab.
+      return await browser.tabs.create({
+        'url': url,
+        'windowId': parentTab.windowId,
+        'index': parentTab.index + 1,
+        'openerTabId': parentTab.id
+      });
+    }
   } catch (e) {
     return null;  // Indicate that an error occurred
   }
 }
 
+async function nextBackgroundIndex(tab) {
+  const childTabs = await browser.tabs.query({openerTabId: tab.id});
+  if (childTabs.length > 0) {
+    childTabs.sort((a, b) => a.index - b.index);
+    return childTabs[childTabs.length - 1].index + 1;
+  } else {
+    return tab.index + 1;
+  }
+}
+
 // Flash a simple "URL ?" error message for 1 second.
-async function flashError(tab) {
-  const newTab = await addChildTab(tab, browser.runtime.getURL("error.html"));
+async function flashError(tab, mods) {
+  const newTab = await openTab(tab, mods, browser.runtime.getURL("error.html"));
   if (newTab) {
     setTimeout(() => {
       browser.tabs.remove(newTab.id);
@@ -90,11 +118,12 @@ browser.contextMenus.onHidden.addListener(() => {
 
 browser.contextMenus.onClicked.addListener(async (info, tab) => {
   if (info.menuItemId === "gotofoo") {
+    const mods = info.modifiers.sort().join('|');
     const url = fixURL(info.selectionText);
-    if (!(url && await addChildTab(tab, url))) {
+    if (!(url && await openTab(tab, mods, url))) {
       // This error is known to occur when opening data: or javascript: URLs,
       // though the validURL() regex filters them out first.
-      await flashError(tab);
+      await flashError(tab, mods);
     }
   }
 });

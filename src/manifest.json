@@ -1,7 +1,7 @@
 {
   "manifest_version": 2,
   "name": "Goto foo",
-  "version": "1.6",
+  "version": "1.7",
   "description": "Adds \"Goto <selected text as url>\" to the right-click menu.",
   "homepage_url": "https://github.com/pmarks-net/gotofoo",
   "background": {
