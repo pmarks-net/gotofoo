@@ -1,12 +1,12 @@
 function validURL(str) {
   if (/\s/.test(str)) {
-    return null;  // don't allow whitespace in the middle.
+    return false;  // don't allow whitespace in the middle.
   }
   try {
     const u = new URL(str);
     return /^(https?):$/.test(u.protocol);
   } catch (e) {
-    return null;
+    return false;
   }
 }
 
