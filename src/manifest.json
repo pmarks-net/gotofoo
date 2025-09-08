@@ -1,11 +1,16 @@
 {
   "manifest_version": 3,
   "name": "Goto foo",
-  "version": "1.7",
+  "version": "1.8",
   "description": "Adds \"Goto <selected text as url>\" to the right-click menu.",
   "homepage_url": "https://github.com/pmarks-net/gotofoo",
   "background": {
     "scripts": ["background.js"]
+  },
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "{a12a18be-af05-41d1-9c8b-7636a0b7978a}"
+    }
   },
   "icons": {
     "32": "icon32.png",
