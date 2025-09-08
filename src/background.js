@@ -95,29 +95,33 @@ async function flashError(tab, mods) {
   }
 }
 
+const wildcardTitle = "Goto \"%s\" as URL";
+
 browser.contextMenus.create({
   id: "gotofoo",
-  title: "Goto foo",
+  title: wildcardTitle,
   contexts: ["selection"],
-  visible: false
+  visible: true
 });
 
 browser.contextMenus.onShown.addListener((info, tab) => {
-  const url = fixURL(info.selectionText);
-  const visible = !!url;
-  const title = `Goto ${url}`;
+  console.log("onShown1", info);
+  console.log("onShown2", info.selectionText);
+  let visible = true;
+  let title = wildcardTitle;
+  if (info.selectionText) {
+    // This only works when we have <all_urls> permission.
+    const url = fixURL(info.selectionText);
+    visible = !!url;
+    title = `Goto ${url}`;
+  }
   browser.contextMenus.update("gotofoo", { visible, title });
-  browser.contextMenus.refresh();
-});
-
-browser.contextMenus.onHidden.addListener(() => {
-  const visible = false;
-  browser.contextMenus.update("gotofoo", { visible });
   browser.contextMenus.refresh();
 });
 
 browser.contextMenus.onClicked.addListener(async (info, tab) => {
   if (info.menuItemId === "gotofoo") {
+    console.log("onClicked", info.selectionText, info);
     const mods = info.modifiers.sort().join('|');
     const url = fixURL(info.selectionText);
     if (!(url && await openTab(tab, mods, url))) {
