@@ -4,6 +4,7 @@ function validURL(str) {
   }
   try {
     const u = new URL(str);
+    // Note that tabs.create() won't accept data: or javascript: URLs.
     return /^(https?):$/.test(u.protocol);
   } catch (e) {
     return false;
@@ -85,14 +86,11 @@ async function nextBackgroundIndex(tab) {
   }
 }
 
-// Flash a simple "URL ?" error message for 1 second.
-async function flashError(tab, mods) {
-  const newTab = await openTab(tab, mods, browser.runtime.getURL("error.html"));
-  if (newTab) {
-    setTimeout(() => {
-      browser.tabs.remove(newTab.id);
-    }, 1000);
+function textToErrorURL(text) {
+  if (text.length > 100) {
+    text = text.substring(0, 100) + "…";
   }
+  return browser.runtime.getURL("error.html") + "?text=" + encodeURIComponent(text);
 }
 
 const wildcardTitle = "Goto \"%s\" as URL";
@@ -105,8 +103,6 @@ browser.contextMenus.create({
 });
 
 browser.contextMenus.onShown.addListener((info, tab) => {
-  console.log("onShown1", info);
-  console.log("onShown2", info.selectionText);
   let visible = true;
   let title = wildcardTitle;
   if (info.selectionText) {
@@ -121,13 +117,11 @@ browser.contextMenus.onShown.addListener((info, tab) => {
 
 browser.contextMenus.onClicked.addListener(async (info, tab) => {
   if (info.menuItemId === "gotofoo") {
-    console.log("onClicked", info.selectionText, info);
     const mods = info.modifiers.sort().join('|');
     const url = fixURL(info.selectionText);
     if (!(url && await openTab(tab, mods, url))) {
-      // This error is known to occur when opening data: or javascript: URLs,
-      // though the validURL() regex filters them out first.
-      await flashError(tab, mods);
+      // If the URL is invalid or opening fails, show a detailed error page.
+      await openTab(tab, mods, textToErrorURL(info.selectionText));
     }
   }
 });
