@@ -14,7 +14,7 @@ Since version 1.8, the `<all_urls>` permission is optional, but user interface w
 - Permissionless: **`Goto "any selected text" as URL`**, no filtering
 - With permission: **`Goto https://formatted.url`**, with non-URLs omitted
 
-In permissionless mode, attempting to Goto invalid text shows an error page, which offers a `[Grant Permission]` button.  With permission, this error becomes unnecessary.
+In permissionless mode, attempting to Goto invalid text shows an error page, which offers a `[Grant Permission]` button.  With permission, the error page is unnecessary.
 
 ## Add to Firefox
 https://addons.mozilla.org/firefox/addon/gotofoo/  
