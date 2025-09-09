@@ -93,20 +93,34 @@ function textToErrorURL(text) {
   return browser.runtime.getURL("error.html") + "?text=" + encodeURIComponent(text);
 }
 
-const wildcardTitle = "Goto \"%s\" as URL";
+
+async function hasPermission(p) {
+  try {
+    return browser.permissions.contains(p);
+  } catch (error) {
+    console.error("Permission check failed:", error);
+    return false;
+  }
+}
+
+const ALL_URLS = { origins: ["<all_urls>"] };
+const WILDCARD_TITLE = "Goto \"%s\" as URL";
 
 browser.contextMenus.create({
   id: "gotofoo",
-  title: wildcardTitle,
+  title: WILDCARD_TITLE,
   contexts: ["selection"],
   visible: true
 });
 
-browser.contextMenus.onShown.addListener((info, tab) => {
+browser.contextMenus.onShown.addListener(async (info, tab) => {
   let visible = true;
-  let title = wildcardTitle;
-  if (info.selectionText) {
-    // This only works when we have <all_urls> permission.
+  let title = WILDCARD_TITLE;
+
+  // Firefox automatically grants temporary permission on user interaction,
+  // but that happens after showing this context menu. To keep the UI
+  // consistent, we only process text if granted permanent permission.
+  if (info.selectionText && await hasPermission(ALL_URLS)) {
     const url = fixURL(info.selectionText);
     visible = !!url;
     title = `Goto ${url}`;

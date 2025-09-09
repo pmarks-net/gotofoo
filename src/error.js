@@ -1,3 +1,5 @@
+const ALL_URLS = { origins: ["<all_urls>"] };
+
 document.addEventListener('DOMContentLoaded', async () => {
   // 1. Get selected text from URL parameter and display it
   const params = new URLSearchParams(window.location.search);
@@ -5,9 +7,8 @@ document.addEventListener('DOMContentLoaded', async () => {
   document.getElementById('selected-text').textContent = selectedText;
 
   // 2. Check for host permission and show the permission section if needed
-  const permission = { origins: ["<all_urls>"] };
   try {
-    const hasPermission = await browser.permissions.contains(permission);
+    const hasPermission = await browser.permissions.contains(ALL_URLS);
     if (!hasPermission) {
       document.getElementById('permission-section').style.display = 'block';
       document.getElementById('grant-button').style.display = 'inline-block';
@@ -25,7 +26,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   // 4. Add event listener for the "Grant Permission" button
   document.getElementById('grant-button').addEventListener('click', async () => {
     try {
-      const granted = await browser.permissions.request(permission);
+      const granted = await browser.permissions.request(ALL_URLS);
       if (granted) {
         // Permission granted, no further action needed here besides closing.
         window.close();
