@@ -7,7 +7,14 @@ Firefox's existing "Open Link" option only works when selecting complete URLs, w
 
 I made **Goto foo** because I missed having the flexibility of Chrome's "Go to &lt;url>" option in Firefox.
 
-Since version 1.8, the `<all_urls>` permission is optional, but if granted, selected text will be formatted as a URL before it appears in the context menu. You can force a permission prompt by trying to Goto random text that isn't a valid URL.
+## Permissionless mode
+
+Since version 1.8, the `<all_urls>` permission is optional, but user interface works more consistently if granted.
+
+- Permissionless: **`Goto "any selected text" as URL`**, no filtering
+- With permission: **`Goto https://formatted.url`**, with non-URLs omitted
+
+In permissionless mode, attempting to Goto invalid text shows an error page, including a `[Grant Permission]` button. Note that Firefox temporarily grants single-page permission when clicking the context menu, but this is more of an annoyance than a feature because it makes the UI less consistent.
 
 ## Add to Firefox
 https://addons.mozilla.org/firefox/addon/gotofoo/  
