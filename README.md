@@ -9,12 +9,12 @@ I made **Goto foo** because I missed having the flexibility of Chrome's "Go to &
 
 ## Permissionless mode
 
-Since version 1.8, the `<all_urls>` permission is optional, but user interface works more consistently if granted.
+Since version 1.8, the `<all_urls>` permission is optional, but the user interface works more consistently if granted.
 
 - Permissionless: **`Goto "any selected text" as URL`**, no filtering
 - With permission: **`Goto https://formatted.url`**, with non-URLs omitted
 
-In permissionless mode, attempting to Goto invalid text shows an error page, which offers a `[Grant Permission]` button.  With permission, the error page is unnecessary.
+In permissionless mode, clicking on Goto "random invalid text" shows an error page, which offers a `[Grant Permission]` button.  If granted, the error page becomes unnecessary.
 
 ## Add to Firefox
 https://addons.mozilla.org/firefox/addon/gotofoo/  
