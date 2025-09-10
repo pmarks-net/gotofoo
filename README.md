@@ -16,6 +16,10 @@ Since version 1.8, the `<all_urls>` permission is optional, but the user interfa
 
 In permissionless mode, clicking on Goto "random invalid text" shows an error page, which offers a `[Grant Permission]` button.  If granted, the error page becomes unnecessary.
 
+## Privacy policy
+
+Goto foo uses your personal data strictly for the purpose of formatting selected text as a URL, and navigating to that URL. This action necessarily shares the URL with the server specified therein, but otherwise no data leaves your computer.
+
 ## Add to Firefox
 https://addons.mozilla.org/firefox/addon/gotofoo/  
 
