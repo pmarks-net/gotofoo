@@ -3,9 +3,7 @@
 
 Adds "Goto &lt;selected text as URL>" to the Firefox right-click menu.
 
-Firefox's existing "Open Link" option only works when selecting complete URLs, whereas **Goto foo** can yank the `xample.co` out of `https://example.com` if you want it to.
-
-I made **Goto foo** because I missed having the flexibility of Chrome's "Go to &lt;url>" option in Firefox.
+Firefox's existing "Open Link" option only works when selecting complete URLs, whereas **Goto foo** can yank `xample.co` from `https://example.com` if you want it to. I made this because I missed having the flexibility of Chrome's "Go to &lt;url>" option in Firefox.
 
 ## Permissionless mode
 
