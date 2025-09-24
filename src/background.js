@@ -47,31 +47,36 @@ function fixURL(url) {
 
 async function openTab(parentTab, mods, url) {
   try {
+    const props = { url };
+    // parentTab may be null if (e.g.) the context menu was opened from
+    // another extension's popup window.
+    if (parentTab) {
+      props.windowId = parentTab.windowId;
+    }
     if (mods == "Ctrl" || mods == "Command" || mods == "Shift") {
       // Open a new background tab.
-      const newTab = await browser.tabs.create({
-        'url': url,
-        'windowId': parentTab.windowId,
-        'index': await nextBackgroundIndex(parentTab),
-        'openerTabId': parentTab.id,
-        'active': false
-      });
+      if (parentTab) {
+        props.index = await nextBackgroundIndex(parentTab);
+        props.openerTabId = parentTab.id;
+      }
+      props.active = false;
+      const newTab = await browser.tabs.create(props);
       if (mods == "Shift") {
         // Move the tab to a new window. We do this in two steps because
         // windows.create() doesn't catch invalid URLs.
-        await browser.windows.create({'tabId': newTab.id});
+        await browser.windows.create({tabId: newTab.id});
       }
       return newTab;
     } else {
       // Default behavior: open a new foreground tab.
-      return await browser.tabs.create({
-        'url': url,
-        'windowId': parentTab.windowId,
-        'index': parentTab.index + 1,
-        'openerTabId': parentTab.id
-      });
+      if (parentTab) {
+        props.index = parentTab.index + 1;
+        props.openerTabId = parentTab.id;
+      }
+      return await browser.tabs.create(props);
     }
   } catch (e) {
+    console.log("openTab fail:", e);
     return null;  // Indicate that an error occurred
   }
 }
