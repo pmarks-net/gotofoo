@@ -1,5 +1,5 @@
 # Goto foo
-![](/src/icon128.png?raw=true)
+![](/misc/icon32_4x.png?raw=true)
 
 Adds "Goto &lt;selected text as URL>" to the Firefox right-click menu.
 
