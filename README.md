@@ -16,7 +16,7 @@ In permissionless mode, clicking on Goto "random invalid text" shows an error pa
 
 ## Privacy policy
 
-Goto foo uses your personal data strictly for the purpose of formatting selected text as a URL, and navigating to that URL. This action necessarily shares the URL with the server specified therein, but otherwise no data leaves your computer.
+Goto foo uses your personal data strictly for the purpose of formatting selected text as a URL, and navigating to that URL. Otherwise, no data leaves your computer.
 
 ## Add to Firefox
 https://addons.mozilla.org/firefox/addon/gotofoo/  
